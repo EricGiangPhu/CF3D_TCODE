@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Player : Character {
 
+    [SerializeField] GameObject _prefBullet;
+    [SerializeField] Transform _pShoot;
+
+    bool _isShoot = true;
+    IEnumerator DelayShoot () {
+        createBullet ();
+        yield return new WaitForSeconds (1);
+        //reset shoot again
+        _isShoot = true;
+    }
+
     public override void Idle () {
         Vector3 newVelocity = Vector3.zero;
         newVelocity.y = _rig.velocity.y;
@@ -40,7 +51,16 @@ public class Player : Character {
     }
 
     public override void Fire () {
-        _ani.SetTrigger ("shoot");
+        if (_isShoot) {
+            _isShoot = false;
+            _ani.SetTrigger ("shoot");
+            StartCoroutine (DelayShoot ());
+        }
+    }
+
+    void createBullet () {
+        SoundManger.Instance.playSoundFire ();
+        Instantiate (_prefBullet, _pShoot.position, transform.rotation);
     }
 
 }
