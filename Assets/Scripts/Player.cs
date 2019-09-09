@@ -60,7 +60,9 @@ public class Player : Character {
 
     void createBullet () {
         SoundManger.Instance.playSoundFire ();
-        Instantiate (_prefBullet, _pShoot.position, transform.rotation);
+        GameObject obj = Instantiate (_prefBullet, _pShoot.position, transform.rotation);
+        Bullet bullet = obj.GetComponent<Bullet> ();
+        bullet.setTypeBullet (Bullet.BulletType.player);
     }
 
 }

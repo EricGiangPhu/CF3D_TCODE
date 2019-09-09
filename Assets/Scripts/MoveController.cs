@@ -14,8 +14,12 @@ public class MoveController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (GameManger.isGameOver) {
+            return;
+        }
+        
         // chuyen ve trang thai dung yen
-        if (Input.GetKeyUp (KeyCode.W) || Input.GetKeyUp (KeyCode.S) ) {
+        if (Input.GetKeyUp (KeyCode.W) || Input.GetKeyUp (KeyCode.S)) {
             _player.Idle ();
         }
 
